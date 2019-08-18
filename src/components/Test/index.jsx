@@ -1,7 +1,7 @@
-import React from 'react';
+import React, { Component } from 'react';
+import './css';
 
 class Test extends Component {
-    state = {};
     render() {
         return <h1>123</h1>;
     }

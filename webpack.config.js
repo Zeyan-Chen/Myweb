@@ -1,37 +1,42 @@
-var path = require('path');
-var ExtractTextPlugin = require('extract-text-webpack-plugin');
-var extractCSS = new ExtractTextPlugin('css/[name].css');
-var HtmlWebpackPlugin = require('html-webpack-plugin');
+const path = require('path');
+const ExtractTextPlugin = require('extract-text-webpack-plugin');
+const extractCSS = new ExtractTextPlugin('css/[name].css');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+const { CleanWebpackPlugin } = require('clean-webpack-plugin'); // 清除再重新 bundle
 
 module.exports = {
     mode: process.env.NODE_ENV,
     context: path.resolve(__dirname, './src'), // 進入點
-    entry: './index.jsx',
+    entry: {
+        index: './index.jsx'
+    },
     output: {
         path: path.resolve(__dirname, './dist'), // 出口點
-        filename: 'index.bundle.js'
+        filename: '[name].js'
     },
     module: {
         rules: [
-            {
-                test: /\.html$/,
-                use: [
-                    {
-                        loader: 'file-loader',
-                        options: {
-                            name: '[path][name].[ext]'
-                        }
-                    }
-                ]
-            },
+            // {
+            //     test: /\.(sass|scss)$/,
+            //     use: extractCSS.extract([
+            //         'style-loader',
+            //         'css-loader',
+            //         'postcss-loader',
+            //         'sass-loader'
+            //     ]),
+            //     exclude: /node_modules/
+            // },
+
             {
                 test: /\.(sass|scss)$/,
-                use: extractCSS.extract([
+                use: [
+                    'style-loader',
                     'css-loader',
                     'postcss-loader',
                     'sass-loader'
-                ]),
-                exclude: /node_modules/
+                ],
+                exclude: path.resolve('./node_modules')
             },
             {
                 test: /.jsx$/,
@@ -65,14 +70,16 @@ module.exports = {
     },
     plugins: [
         extractCSS,
+        new CopyWebpackPlugin(),
+        new CleanWebpackPlugin(),
         new HtmlWebpackPlugin({
             title: 'practice webpack',
             filename: 'index.html',
             template: 'html/template.html',
             viewport: 'width=device-width, initial-scale=1.0',
             description: 'webpack通通給我開發起來',
-            Keywords: 'webpack通通給我開發起來',
-            chunks: ['index']
+            Keywords: 'webpack通通給我開發起來'
+            // chunks: ['index']
         })
     ]
 };

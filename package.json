@@ -5,7 +5,7 @@
     "author": "LeoYanisme <leoyanisme@gmail.com>",
     "license": "MIT",
     "scripts": {
-        "dev": "cross-env NODE_ENV=development webpack-dev-server --open",
+        "dev": "cross-env NODE_ENV=development webpack-dev-server --open --watch",
         "bundle": "cross-env webpack --mode production"
     },
     "devDependencies": {
@@ -15,6 +15,8 @@
         "@babel/preset-react": "^7.0.0",
         "autoprefixer": "^9.6.1",
         "babel-loader": "^8.0.6",
+        "clean-webpack-plugin": "^3.0.0",
+        "copy-webpack-plugin": "^5.0.4",
         "cross-env": "^5.2.0",
         "css-loader": "^3.2.0",
         "extract-text-webpack-plugin": "^4.0.0-beta.0",
@@ -23,6 +25,7 @@
         "node-sass": "^4.12.0",
         "postcss-loader": "^3.0.0",
         "sass-loader": "^7.2.0",
+        "style-loader": "^1.0.0",
         "webpack": "^4.39.1",
         "webpack-cli": "^3.3.6",
         "webpack-dev-server": "^3.8.0"
